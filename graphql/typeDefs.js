@@ -1,5 +1,7 @@
-export const typeDefs = `
-    # Identitiy and Authentication Types
+export const typeDefs = `#graphql
+    # -----------------------------------------
+    # Identity & Auth Types
+    # -----------------------------------------
     type User {
         id: ID!
         name: String!
@@ -12,37 +14,39 @@ export const typeDefs = `
         user: User!
     }
 
-    # Queries 
-    type Query {
-        # Placeholder. Olamilekan, add 'getIssues' here.
-        Query: {
-    issues: () => getAllIssues(),
-    myIssues: (_, __, { user }) => {
-      if (!user) throw new Error("Unauthorized");
-      return getIssuesByUser(user.id);
-    },
-  },
-
-        # I will add a query for the chat agent here later as well
+    # -----------------------------------------
+    #  Issue Types (Placeholder)
+    # -----------------------------------------
+    type Issue {
+        id: ID!
+        title: String!
+        description: String!
+        status: String!
+        # Olamilekan add more fields here (geotag, category, etc.)
     }
 
-    # Mutations
+    # -----------------------------------------
+    # ROOT QUERIES
+    # -----------------------------------------
+    type Query {
+        # Person B Queries
+        issues: [Issue!]!
+        myIssues: [Issue!]!
+
+        # Person A Query (I will build this later)
+        chatWithAgent(message: String!): String!
+    }
+
+    # -----------------------------------------
+    # ROOT MUTATIONS
+    # -----------------------------------------
     type Mutation {
-        register(name: String!, email: String!, password: String!, role: String!): AuthPayload!
+        # Person A Mutations
+        register(name: String!, email: String!, password: String!, role: String): AuthPayload!
         login(email: String!, password: String!): AuthPayload!
 
-        # Olamilekan, add 'createIssue' and 'updateIssue' mutations here.
-        createIssue: (_, args, { user }) => {
-      if (!user) throw new Error("Unauthorized");
-
-      return createIssue({
-        ...args,
-        userId: user.id,
-      });
-    },
-
-    updateIssueStatus: (_, { issueId, status }) => {
-      return updateIssueStatus(issueId, status);
-    },
+        # Person B Mutations
+        createIssue(title: String!, description: String!): Issue!
+        updateIssueStatus(issueId: ID!, status: String!): Issue!
     }
 `;
