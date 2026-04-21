@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { createReactAgent } from "@langchain/langgraph/prebuilt"
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 import Issue from "../models/Issue.js";
@@ -81,7 +81,7 @@ const tools = [getOpenIssues, getSafetyAlerts];
 
 // initialize the Langchain agent wrapper
 const model = new ChatGoogleGenerativeAI({
-  model: "gemini-1.5-flash",
+  model: "gemini-1.5-flast",
   temperature: 0, // 0 means agent becomes more factual and hallunination less
 });
 
@@ -89,7 +89,8 @@ const model = new ChatGoogleGenerativeAI({
 const agent = createAgent({
   model: model,
   tools: tools,
-  systemPrompt: "You are a helpful municipal assistant. Use your tools to answer questions about local issues and safety alerts. Be concise, polite, and helpful.",
+  systemPrompt:
+    "You are a helpful municipal assistant. Use your tools to answer questions about local issues and safety alerts. Be concise, polite, and helpful.",
 });
 
 // export execution function for the agent
