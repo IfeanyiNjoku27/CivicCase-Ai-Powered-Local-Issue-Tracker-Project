@@ -9,9 +9,23 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@apollo/client": "^4.1.7",
+    "@apollo/server": "^5.5.0",
+    "@as-integrations/next": "^4.1.0",
+    "@google/genai": "^1.50.1",
+    "@langchain/core": "^1.1.40",
+    "@langchain/google-genai": "^2.1.27",
+    "@langchain/langgraph": "^1.2.9",
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.4.2",
+    "graphql": "^16.13.2",
+    "jsonwebtoken": "^9.0.3",
+    "langchain": "^1.0.0-alpha.9",
+    "mongoose": "^9.4.1",
     "next": "16.2.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
