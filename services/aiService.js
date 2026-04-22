@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { createReactAgent } from "@langchain/langgraph/prebuilt"
+import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { tool } from "@langchain/core/tools";
 import { z } from "zod";
 import Issue from "../models/Issue.js";
@@ -10,7 +10,31 @@ import { createAgent } from "langchain";
 /* 
 // Person B: Issue Categorization 
 */
-const ai = new GoogleGenAI(process.env.GOOGLE_API_KEY);
+const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+
+// // list available models in console
+// async function listGeminiModels() {
+//   try {
+//     const response = await ai.models.list();
+
+//     const models = response.models || response.data?.models;
+
+//     if (!models) {
+//       console.log("Unexpected response:", response);
+//       return;
+//     }
+
+//     console.log("Available Gemini Models:\n");
+
+//     models.forEach(model => {
+//       console.log(`🔹 ${model.name}`);
+//     });
+//   } catch (error) {
+//     console.error("Error fetching models:", error);
+//   }
+// }
+
+// listGeminiModels();
 
 export const categorizeIssue = async (description) => {
   try {
@@ -22,7 +46,7 @@ export const categorizeIssue = async (description) => {
     `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-pro",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
@@ -81,15 +105,16 @@ const tools = [getOpenIssues, getSafetyAlerts];
 
 // initialize the Langchain agent wrapper
 const model = new ChatGoogleGenerativeAI({
-  model: "gemini-1.5-flash",
-  temperature: 0, // 0 means agent becomes more factual and hallunination less
+  model: "gemini-2.5-flash",
+  temperature: 0, // 0 means agent becomes more factual and halluninates less
 });
 
 // create langraph agent
 const agent = createAgent({
   model: model,
   tools: tools,
-  systemPrompt: "You are a helpful municipal assistant. Use your tools to answer questions about local issues and safety alerts. Be concise, polite, and helpful.",
+  systemPrompt:
+    "You are a helpful municipal assistant. Use your tools to answer questions about local issues and safety alerts. Be concise, polite, and helpful.",
 });
 
 // export execution function for the agent

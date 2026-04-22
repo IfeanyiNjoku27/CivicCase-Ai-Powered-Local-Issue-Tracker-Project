@@ -6,8 +6,8 @@ export const authResolvers = {
     chatWithAgent: async (_, { message }, { user }) => {
       // optional: you can add authentication check here if you want only logged in users to access the agent
       // if we want to make this public then comment out if statement below
-      // if (!user)
-      //   throw new Error("Authentication required to chat with the agent.");
+      if (!user)
+        throw new Error("Authentication required to chat with the agent.");
 
       try {
         return await chatWithAgent(message);
