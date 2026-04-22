@@ -15,14 +15,15 @@ export const typeDefs = `#graphql
     }
 
     # -----------------------------------------
-    #  Issue Types (Placeholder)
+    #  Issue Types 
     # -----------------------------------------
     type Issue {
         id: ID!
         title: String!
         description: String!
+        location: String!
         status: String!
-        # Olamilekan add more fields here (geotag, category, etc.)
+        category: String!
     }
 
     # -----------------------------------------
@@ -46,7 +47,7 @@ export const typeDefs = `#graphql
         login(email: String!, password: String!): AuthPayload!
 
         # Person B Mutations
-        createIssue(title: String!, description: String!): Issue!
+        createIssue(title: String!, description: String!, location: String!): Issue!
         updateIssueStatus(issueId: ID!, status: String!): Issue!
     }
 `;

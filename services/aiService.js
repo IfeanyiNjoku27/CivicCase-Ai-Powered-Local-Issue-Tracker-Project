@@ -10,7 +10,31 @@ import { createAgent } from "langchain";
 /* 
 // Person B: Issue Categorization 
 */
-const ai = new GoogleGenAI(process.env.GOOGLE_API_KEY);
+const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY });
+
+// // list available models in console
+// async function listGeminiModels() {
+//   try {
+//     const response = await ai.models.list();
+
+//     const models = response.models || response.data?.models;
+
+//     if (!models) {
+//       console.log("Unexpected response:", response);
+//       return;
+//     }
+
+//     console.log("Available Gemini Models:\n");
+
+//     models.forEach(model => {
+//       console.log(`🔹 ${model.name}`);
+//     });
+//   } catch (error) {
+//     console.error("Error fetching models:", error);
+//   }
+// }
+
+// listGeminiModels();
 
 export const categorizeIssue = async (description) => {
   try {
@@ -22,7 +46,7 @@ export const categorizeIssue = async (description) => {
     `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-pro",
+      model: "gemini-2.5-flash",
       contents: prompt,
     });
 
@@ -81,8 +105,8 @@ const tools = [getOpenIssues, getSafetyAlerts];
 
 // initialize the Langchain agent wrapper
 const model = new ChatGoogleGenerativeAI({
-  model: "gemini-1.5-flast",
-  temperature: 0, // 0 means agent becomes more factual and hallunination less
+  model: "gemini-2.5-flash",
+  temperature: 0, // 0 means agent becomes more factual and halluninates less
 });
 
 // create langraph agent
